@@ -1,9 +1,9 @@
-// ===== BTS7960 Pins (Left motors) =====
+
 #define L_RPWM 9
 #define L_LPWM 8
 #define L_EN 7 // optional, can also hardwire to 5V
 
-// ===== L298N Pins (Right motors) =====
+
 #define R_IN1 4
 #define R_IN2 5
 #define R_ENB 6  // PWM speed control
