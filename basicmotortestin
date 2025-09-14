@@ -1,0 +1,86 @@
+// ===== BTS7960 Pins (Left motors) =====
+#define L_RPWM 9
+#define L_LPWM 8
+#define L_EN 7 // optional, can also hardwire to 5V
+
+// ===== L298N Pins (Right motors) =====
+#define R_IN1 4
+#define R_IN2 5
+#define R_ENB 6  // PWM speed control
+
+int Speed = 180;
+
+void setup() {
+  // BTS7960 Pins
+  pinMode(L_RPWM, OUTPUT);
+  pinMode(L_LPWM, OUTPUT);
+  pinMode(L_EN, OUTPUT);
+  digitalWrite(L_EN, HIGH); // Enable left motor driver
+
+  // L298N Pins
+  pinMode(R_IN1, OUTPUT);
+  pinMode(R_IN2, OUTPUT);
+  pinMode(R_ENB, OUTPUT);
+}
+
+void loop() {
+  // Forward
+  leftForward();
+  rightForward();
+  delay(2000);
+
+  // Backward
+  leftBackward();
+  rightBackward();
+  delay(2000);
+
+  // Turn Left
+  leftBackward();
+  rightForward();
+  delay(2000);
+
+  // Turn Right
+  leftForward();
+  rightBackward();
+  delay(2000);
+
+  // Stop
+  leftStop();
+  rightStop();
+  delay(2000);
+}
+
+// ==== Motor Control Functions ====
+
+void leftForward() {
+  analogWrite(L_RPWM, Speed);
+  analogWrite(L_LPWM, 0);
+}
+
+void leftBackward() {
+  analogWrite(L_RPWM, 0);
+  analogWrite(L_LPWM, Speed);
+}
+
+void leftStop() {
+  analogWrite(L_RPWM, 0);
+  analogWrite(L_LPWM, 0);
+}
+
+void rightForward() {
+  digitalWrite(R_IN1, HIGH);
+  digitalWrite(R_IN2, LOW);
+  analogWrite(R_ENB, Speed);
+}
+
+void rightBackward() {
+  digitalWrite(R_IN1, LOW);
+  digitalWrite(R_IN2, HIGH);
+  analogWrite(R_ENB, Speed);
+}
+
+void rightStop() {
+  digitalWrite(R_IN1, LOW);
+  digitalWrite(R_IN2, LOW);
+  analogWrite(R_ENB, 0);
+}
